@@ -5,6 +5,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public abstract class PageBase {
 
+	protected static final int EXPLICIT_WAIT_TIMEOUT_SECONDS = 20;
 	private WebDriver driver;
 
 	public PageBase(WebDriver driver) {

@@ -17,7 +17,9 @@ public class LandingPage extends PageBase {
 	}
 
 	public LoginPage proceedToLoginPage() {
+
 		loginRegisterLink.click();
+
 		return new LoginPage(getDriver());
 	}
 

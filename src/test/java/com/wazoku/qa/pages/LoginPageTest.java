@@ -2,8 +2,6 @@ package com.wazoku.qa.pages;
 
 import static org.testng.Assert.assertEquals;
 
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -14,8 +12,6 @@ import com.wazoku.qa.base.TestBase;
 import com.wazoku.qa.utils.TestUtils;
 
 public class LoginPageTest extends TestBase {
-
-	private static final int EXPLICIT_WAIT_TIMEOUT_SECONDS = 20;
 
 	LandingPage landingPage;
 	LoginPage loginPage;
@@ -28,8 +24,6 @@ public class LoginPageTest extends TestBase {
 		landingPage = new LandingPage(getDriver());
 		loginPage = landingPage.proceedToLoginPage();
 
-		WebDriverWait wait = new WebDriverWait(getDriver(), EXPLICIT_WAIT_TIMEOUT_SECONDS);
-		wait.until(ExpectedConditions.visibilityOf(loginPage.getEmail()));
 	}
 
 	@DataProvider
