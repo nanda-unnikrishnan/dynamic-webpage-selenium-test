@@ -31,8 +31,9 @@ public class ChallengesTest extends TestBase {
 
 	@Test
 	public void testDiscoverPageUrl() {
-		String currentUrl = getDriver().getCurrentUrl();
-		assertEquals(currentUrl.substring(0, currentUrl.indexOf("?")), AppConfig.getConfigValue(DISCOVER_PAGE_URL));
+		String currentUrlWithoutQueryParameters = getUrlWithoutQueryParameters();
+
+		assertEquals(currentUrlWithoutQueryParameters, AppConfig.getConfigValue(DISCOVER_PAGE_URL));
 	}
 
 	@Test
