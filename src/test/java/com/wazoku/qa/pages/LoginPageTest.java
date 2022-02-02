@@ -15,6 +15,8 @@ import com.wazoku.qa.utils.TestUtils;
 
 public class LoginPageTest extends TestBase {
 
+	private static final int EXPLICIT_WAIT_TIMEOUT_SECONDS = 20;
+
 	LandingPage landingPage;
 	LoginPage loginPage;
 	HomePage homePage;
@@ -26,7 +28,7 @@ public class LoginPageTest extends TestBase {
 		landingPage = new LandingPage(getDriver());
 		loginPage = landingPage.proceedToLoginPage();
 
-		WebDriverWait wait = new WebDriverWait(getDriver(), 20);
+		WebDriverWait wait = new WebDriverWait(getDriver(), EXPLICIT_WAIT_TIMEOUT_SECONDS);
 		wait.until(ExpectedConditions.visibilityOf(loginPage.getEmail()));
 	}
 
@@ -45,8 +47,8 @@ public class LoginPageTest extends TestBase {
 	@Test
 	public void succesfulLoginTest() {
 
-		homePage = loginPage.login(AppConfig.getConfigValue(VALID_EMAIL_CONFIG_NAME),
-				AppConfig.getConfigValue(VALID_PASSWORD_CONFIG_NAME));
+		homePage = loginPage.login(AppConfig.getConfigValue(LOGIN_EMAIL_CONFIG_NAME),
+				AppConfig.getConfigValue(LOGIN_PASSWORD_CONFIG_NAME));
 
 		assertEquals(getDriver().getCurrentUrl(), AppConfig.getConfigValue(HOME_PAGE_URL));
 	}

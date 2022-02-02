@@ -17,7 +17,7 @@ public class LoginPage extends PageBase {
 	@FindBy(xpath = "//button[contains(text(), 'Login')]")
 	private WebElement loginButton;
 
-	@FindBy(xpath = "//span[@class='ng-binding ng-scope']")
+	@FindBy(xpath = "//div[@ng-messages='vm.loginForm.$error']/span[@ng-message]")
 	private WebElement errorMessageBlock;
 
 	public LoginPage(WebDriver driver) {
@@ -26,7 +26,9 @@ public class LoginPage extends PageBase {
 
 	public HomePage login(String emailInput, String passwordInput) {
 
+		email.clear();
 		email.sendKeys(emailInput);
+		password.clear();
 		password.sendKeys(passwordInput);
 		loginButton.click();
 

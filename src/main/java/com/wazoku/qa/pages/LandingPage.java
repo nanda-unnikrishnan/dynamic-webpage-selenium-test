@@ -9,7 +9,6 @@ import com.wazoku.qa.base.PageBase;
 public class LandingPage extends PageBase {
 
 	// Object Repository
-
 	@FindBy(xpath = "//a[@title='Login or Register']")
 	private WebElement loginRegisterLink;
 

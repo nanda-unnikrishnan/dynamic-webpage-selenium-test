@@ -10,7 +10,7 @@ import com.wazoku.qa.base.PageBase;
 
 public class DiscoverPage extends PageBase {
 
-	@FindBy(xpath = "//div[@class='l-card__content']//div[@class='wk-card-header']//a")
+	@FindBy(xpath = "//a[@data-selenium='card-header-title']")
 	private List<WebElement> challengeList;
 
 	public DiscoverPage(WebDriver driver) {
@@ -22,10 +22,10 @@ public class DiscoverPage extends PageBase {
 				.getAttribute("title");
 	}
 
-	public ChallengePage navigateToChallenge(int index) {
+	public ChallengeDetailsPage navigateToChallenge(int index) {
 		challengeList.get(index)
 				.click();
-		return new ChallengePage(getDriver());
+		return new ChallengeDetailsPage(getDriver());
 	}
 
 }

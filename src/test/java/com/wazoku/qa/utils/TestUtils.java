@@ -12,10 +12,14 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.wazoku.qa.base.AppConfig;
 
 public class TestUtils {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(TestUtils.class);
 
 	private static final Workbook WORKBOOK;
 
@@ -53,6 +57,7 @@ public class TestUtils {
 	}
 
 	public static void takeScreenshot(WebDriver driver, String screenshotFileName) {
+		LOGGER.info("Creating screenshot with name [{}]", screenshotFileName);
 		File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		try {
 			FileUtils.copyFile(screenshot, new File(SCREENSHOT_DIRECTORY + screenshotFileName));

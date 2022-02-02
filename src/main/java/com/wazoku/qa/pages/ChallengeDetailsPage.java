@@ -6,12 +6,12 @@ import org.openqa.selenium.support.FindBy;
 
 import com.wazoku.qa.base.PageBase;
 
-public class ChallengePage extends PageBase {
+public class ChallengeDetailsPage extends PageBase {
 
-	@FindBy(xpath = "//div[@class='title-container title-container-shadow']")
+	@FindBy(xpath = "//h1[@data-selenium='banner-title']")
 	private WebElement challengeTitle;
 
-	public ChallengePage(WebDriver driver) {
+	public ChallengeDetailsPage(WebDriver driver) {
 		super(driver);
 	}
 

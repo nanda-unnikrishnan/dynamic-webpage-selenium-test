@@ -9,10 +9,10 @@ import org.testng.annotations.AfterMethod;
 
 public abstract class TestBase {
 
-	protected static final String VALID_EMAIL_CONFIG_NAME = "validEmail";
-	protected static final String VALID_PASSWORD_CONFIG_NAME = "validPassword";
-	protected static final String HOME_PAGE_URL = "homePageURL";
-	protected static final String DISCOVER_PAGE_URL = "discoverPageURL";
+	protected static final String LOGIN_EMAIL_CONFIG_NAME = "login.email";
+	protected static final String LOGIN_PASSWORD_CONFIG_NAME = "login.password";
+	protected static final String HOME_PAGE_URL = "url.homepage";
+	protected static final String DISCOVER_PAGE_URL = "url.discoverpage";
 
 	private WebDriver driver;
 
