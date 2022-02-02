@@ -30,8 +30,13 @@ public class ChallengesTest extends TestBase {
 	}
 
 	@Test
-	public void selectFirstChallengeTest() {
+	public void testDiscoverPageUrl() {
+		String currentUrl = getDriver().getCurrentUrl();
+		assertEquals(currentUrl.substring(0, currentUrl.indexOf("?")), AppConfig.getConfigValue(DISCOVER_PAGE_URL));
+	}
 
+	@Test
+	public void selectFirstChallengeTest() {
 		// Getting the name of the first challenge to validate in details page
 		String challengeName = discoverPage.getChallengeName(0);
 
