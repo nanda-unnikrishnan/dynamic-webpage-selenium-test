@@ -2,10 +2,7 @@ package com.wazoku.qa.pages;
 
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -39,7 +36,7 @@ public class LoginPage extends PageBase {
 
 	public HomePage login(String emailInput, String passwordInput) {
 
-		WebDriverWait wait = new WebDriverWait(getDriver(), EXPLICIT_WAIT_TIMEOUT_SECONDS);
+		WebDriverWait wait = getNewWaitInstance(EXPLICIT_WAIT_TIMEOUT_SECONDS);
 		wait.until(ExpectedConditions.visibilityOf(loginModal));
 
 		email.clear();
@@ -54,36 +51,30 @@ public class LoginPage extends PageBase {
 		}
 
 		LOGGER.info("Login button clicked.");
-
+		/*
+		 * Wait until the modal window has disappeared before proceeding
+		 */
 		try {
-			getDriver().manage()
-					.timeouts()
-					.implicitlyWait(10, TimeUnit.MILLISECONDS);
-			wait.until(ExpectedConditions.invisibilityOf(loginModal));
+			setImplicitWaitTime(10, TimeUnit.MILLISECONDS);
+			getNewWaitInstance(1).until(ExpectedConditions.invisibilityOf(loginModal));
 
 		} catch (NoSuchElementException | TimeoutException e) {
-			getDriver().manage()
-					.timeouts()
-					.implicitlyWait(20, TimeUnit.SECONDS);
+			setImplicitWaitTime(20, TimeUnit.SECONDS);
 		}
 
 		return new HomePage(getDriver());
 
 	}
 
-	public boolean isErrorMessagePresent() {
-		getDriver().manage()
-				.timeouts()
-				.implicitlyWait(10, TimeUnit.MILLISECONDS);
+	private boolean isErrorMessagePresent() {
+		setImplicitWaitTime(10, TimeUnit.MILLISECONDS);
 		boolean isErrorMessagePresent;
 		try {
 			isErrorMessagePresent = errorMessageBlock.isDisplayed();
 		} catch (NoSuchElementException e) {
 			isErrorMessagePresent = false;
 		}
-		getDriver().manage()
-				.timeouts()
-				.implicitlyWait(20, TimeUnit.SECONDS);
+		setImplicitWaitTime(20, TimeUnit.SECONDS);
 		return isErrorMessagePresent;
 	}
 

@@ -1,7 +1,10 @@
 package com.wazoku.qa.base;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public abstract class PageBase {
 
@@ -15,6 +18,17 @@ public abstract class PageBase {
 
 	protected WebDriver getDriver() {
 		return this.driver;
+	}
+
+	protected WebDriverWait getNewWaitInstance(int maxTimeInSecondsToWait) {
+		WebDriverWait wait2 = new WebDriverWait(getDriver(), maxTimeInSecondsToWait);
+		return wait2;
+	
+	}
+
+	protected void setImplicitWaitTime(int time, TimeUnit timeUnit) {
+		getDriver().manage().timeouts().implicitlyWait(time, timeUnit);
+	
 	}
 
 }

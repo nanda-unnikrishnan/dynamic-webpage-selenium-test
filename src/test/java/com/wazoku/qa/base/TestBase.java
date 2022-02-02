@@ -5,14 +5,20 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 
 public abstract class TestBase {
 
 	protected static final String LOGIN_EMAIL_CONFIG_NAME = "login.email";
+
 	protected static final String LOGIN_PASSWORD_CONFIG_NAME = "login.password";
+
 	protected static final String HOME_PAGE_URL = "url.homepage";
+
 	protected static final String DISCOVER_PAGE_URL = "url.discoverpage";
+
+	private static final String SCREENSHOT_IMAGE_EXTENSION = ".png";
 
 	private WebDriver driver;
 
@@ -31,17 +37,10 @@ public abstract class TestBase {
 			driver = new FirefoxDriver();
 		}
 
-		driver.manage()
-				.window()
-				.maximize();
-		driver.manage()
-				.deleteAllCookies();
-		driver.manage()
-				.timeouts()
-				.pageLoadTimeout(30, TimeUnit.SECONDS);
-		driver.manage()
-				.timeouts()
-				.implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+		driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
 		driver.get(AppConfig.getConfigValue("url"));
 	}
@@ -51,7 +50,7 @@ public abstract class TestBase {
 	}
 
 	@AfterMethod
-	public void tearDown() {
+	public void tearDown(ITestResult result) {
 		driver.quit();
 	}
 
@@ -63,6 +62,10 @@ public abstract class TestBase {
 		}
 		String currentUrlWithoutQueryParameters = currentUrl.substring(0, urlEndIndex);
 		return currentUrlWithoutQueryParameters;
+	}
+
+	protected String getScreenshotName(ITestResult result) {
+		return result.getMethod().getQualifiedName() + SCREENSHOT_IMAGE_EXTENSION;
 	}
 
 }

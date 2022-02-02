@@ -2,9 +2,8 @@ package com.wazoku.qa.pages;
 
 import static org.testng.Assert.assertEquals;
 
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.ITestResult;
+import org.testng.annotations.*;
 
 import com.wazoku.qa.base.AppConfig;
 import com.wazoku.qa.base.TestBase;
@@ -13,7 +12,9 @@ import com.wazoku.qa.utils.TestUtils;
 public class ChallengesTest extends TestBase {
 
 	LandingPage landingPage;
+
 	DiscoverPage discoverPage;
+
 	ChallengeDetailsPage challengeDetailsPage;
 
 	@Override
@@ -23,12 +24,11 @@ public class ChallengesTest extends TestBase {
 
 		landingPage = new LandingPage(getDriver());
 
-		discoverPage = landingPage.proceedToLoginPage()
-				.login(AppConfig.getConfigValue(LOGIN_EMAIL_CONFIG_NAME),
-						AppConfig.getConfigValue(LOGIN_PASSWORD_CONFIG_NAME))
-				.navigateToDiscoverPage();
+		discoverPage = landingPage.proceedToLoginPage().login(AppConfig.getConfigValue(LOGIN_EMAIL_CONFIG_NAME),
+				AppConfig.getConfigValue(LOGIN_PASSWORD_CONFIG_NAME)).navigateToDiscoverPage();
 	}
 
+	@Test
 	public void testDiscoverPageUrl() {
 		String currentUrlWithoutQueryParameters = getUrlWithoutQueryParameters();
 
@@ -48,8 +48,9 @@ public class ChallengesTest extends TestBase {
 
 	@Override
 	@AfterMethod
-	public void tearDown() {
-		TestUtils.takeScreenshot(getDriver(), "WazokuFirstChallengeScreenshot.png");
-		getDriver().quit();
+	public void tearDown(ITestResult result) {
+		TestUtils.takeScreenshot(getDriver(), getScreenshotName(result));
+		super.tearDown(result);
 	}
+
 }

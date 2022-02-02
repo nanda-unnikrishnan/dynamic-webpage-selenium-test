@@ -2,10 +2,8 @@ package com.wazoku.qa.pages;
 
 import static org.testng.Assert.assertEquals;
 
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.ITestResult;
+import org.testng.annotations.*;
 
 import com.wazoku.qa.base.AppConfig;
 import com.wazoku.qa.base.TestBase;
@@ -14,7 +12,9 @@ import com.wazoku.qa.utils.TestUtils;
 public class LoginPageTest extends TestBase {
 
 	LandingPage landingPage;
+
 	LoginPage loginPage;
+
 	HomePage homePage;
 
 	@Override
@@ -49,7 +49,8 @@ public class LoginPageTest extends TestBase {
 
 	@Override
 	@AfterMethod
-	public void tearDown() {
-		getDriver().quit();
+	public void tearDown(ITestResult result) {
+		super.tearDown(result);
 	}
+
 }
