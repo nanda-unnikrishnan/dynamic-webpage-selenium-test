@@ -20,7 +20,7 @@ public class HomePage extends PageBase {
 	public DiscoverPage navigateToDiscoverPage() {
 
 		WebDriverWait wait = new WebDriverWait(getDriver(), EXPLICIT_WAIT_TIMEOUT_SECONDS);
-		wait.until(ExpectedConditions.visibilityOf(discoverLink));
+		wait.until(ExpectedConditions.elementToBeClickable(discoverLink));
 
 		discoverLink.click();
 		return new DiscoverPage(getDriver());
