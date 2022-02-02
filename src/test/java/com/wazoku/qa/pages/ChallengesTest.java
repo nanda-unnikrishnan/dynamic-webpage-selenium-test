@@ -29,7 +29,6 @@ public class ChallengesTest extends TestBase {
 				.navigateToDiscoverPage();
 	}
 
-	@Test
 	public void testDiscoverPageUrl() {
 		String currentUrlWithoutQueryParameters = getUrlWithoutQueryParameters();
 

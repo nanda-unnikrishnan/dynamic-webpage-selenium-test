@@ -2,7 +2,10 @@ package com.wazoku.qa.pages;
 
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -14,6 +17,9 @@ import com.wazoku.qa.base.PageBase;
 public class LoginPage extends PageBase {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
+
+	@FindBy(xpath = "//div[@uib-modal-window='modal-window']")
+	private WebElement loginModal;
 
 	@FindBy(id = "emailField")
 	private WebElement email;
@@ -27,9 +33,6 @@ public class LoginPage extends PageBase {
 	@FindBy(xpath = "//div[@ng-messages='vm.loginForm.$error']/span[@ng-message]")
 	private WebElement errorMessageBlock;
 
-	@FindBy(xpath = "//div[@class='modal']")
-	private WebElement modalBlock;
-
 	public LoginPage(WebDriver driver) {
 		super(driver);
 	}
@@ -37,7 +40,7 @@ public class LoginPage extends PageBase {
 	public HomePage login(String emailInput, String passwordInput) {
 
 		WebDriverWait wait = new WebDriverWait(getDriver(), EXPLICIT_WAIT_TIMEOUT_SECONDS);
-		wait.until(ExpectedConditions.visibilityOf(email));
+		wait.until(ExpectedConditions.visibilityOf(loginModal));
 
 		email.clear();
 		email.sendKeys(emailInput);
@@ -45,29 +48,43 @@ public class LoginPage extends PageBase {
 		password.sendKeys(passwordInput);
 		loginButton.click();
 
-		if (!hasModalDisappeared()) {
-			LOGGER.warn("Login unsuccessful.");
+		if (isErrorMessagePresent()) {
+			LOGGER.warn("Login unsuccessful");
 			return null;
+		}
+
+		LOGGER.info("Login button clicked.");
+
+		try {
+			getDriver().manage()
+					.timeouts()
+					.implicitlyWait(10, TimeUnit.MILLISECONDS);
+			wait.until(ExpectedConditions.invisibilityOf(loginModal));
+
+		} catch (NoSuchElementException | TimeoutException e) {
+			getDriver().manage()
+					.timeouts()
+					.implicitlyWait(20, TimeUnit.SECONDS);
 		}
 
 		return new HomePage(getDriver());
 
 	}
 
-	private boolean hasModalDisappeared() {
-		// Reduce timeout so as to fail fast when element is not found
-		getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.MILLISECONDS);
+	public boolean isErrorMessagePresent() {
+		getDriver().manage()
+				.timeouts()
+				.implicitlyWait(10, TimeUnit.MILLISECONDS);
+		boolean isErrorMessagePresent;
 		try {
-			WebDriverWait wait = new WebDriverWait(getDriver(), 1);
-			wait.until(ExpectedConditions.invisibilityOf(modalBlock));
-			return !modalBlock.isDisplayed();
-		} catch (NoSuchElementException | TimeoutException e) {
-			// Ignore this error as the modal window is not seen on successfull login
+			isErrorMessagePresent = errorMessageBlock.isDisplayed();
+		} catch (NoSuchElementException e) {
+			isErrorMessagePresent = false;
 		}
-		// Reset timeout
-		getDriver().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		return true;
-
+		getDriver().manage()
+				.timeouts()
+				.implicitlyWait(20, TimeUnit.SECONDS);
+		return isErrorMessagePresent;
 	}
 
 	public String getErrorMessageText() {
