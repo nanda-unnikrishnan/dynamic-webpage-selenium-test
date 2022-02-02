@@ -55,4 +55,14 @@ public abstract class TestBase {
 		driver.quit();
 	}
 
+	protected String getUrlWithoutQueryParameters() {
+		String currentUrl = getDriver().getCurrentUrl();
+		int urlEndIndex = currentUrl.indexOf("?");
+		if (urlEndIndex == -1) {
+			urlEndIndex = currentUrl.length();
+		}
+		String currentUrlWithoutQueryParameters = currentUrl.substring(0, urlEndIndex);
+		return currentUrlWithoutQueryParameters;
+	}
+
 }
