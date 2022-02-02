@@ -6,6 +6,15 @@
 	<artifactId>com.automation.exercise</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>WazokuTestAutomationExercise</name>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<java.version>1.8</java.version>
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
