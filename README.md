@@ -21,8 +21,8 @@
 
 ## Test execution
 
-1. Clone https://github.com/nanda-unnikrishnan/wazoku-qa-interview-nanda
-2. Go to directory *wazoku-qa-interview-nanda*
+1. Clone https://github.com/nanda-unnikrishnan/dynamic-webpage-selenium-test
+2. Go to directory *dynamic-webpage-selenium-test*
 3. Execute below command which uses Maven (needs to be installed prior) after updating chrome driver location
 ```
 mvn clean test -Dchrome.driver.location=<location_of_chromedriver>
